@@ -1,10 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+}
 body {
-    width: 100%;
     height: 100%;
+    width: 100%;
     overflow: hidden;
+    background-color: #dcedc8;
+}
+.total-center, .center-box, .footer-bot {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.total-center {
+    height: 100%;
+    width: 50%;
+
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 .center-box {
-    display: flex;
+    position: relative;
     align-self: center;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 25%;
+
+    font-family: 'Roboto Slab', sans-serif;
+    color: #212121;
+
+
+    background-color: #8bc34a;
+    border-radius: 10px;
+    box-shadow: 1px 5px 5px #b6b6b6;
+}
+.center-box form {
+    width: 33%;
+    font-size: 36px;
+}
+.center-box form input {
+    font-size: 38px;
+    overflow: hidden;
+}
+.center-box p {
+    font-family: 'Roboto Slab', sans-serif;
+}
+.header-top {
+    float: left;
+    height: 33%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+.footer-bot {
+    margin-top: 10%;
+    height: 5%;
+    bottom: 0;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #8bc34a;
+
+    border-radius: 10px;
+}
+#footer-article {
+    margin-left: 16.5%;
+    font-family: 'Robot Slab', sans-serif;
+}
+#footer-article a {
+    text-decoration: none;
+    color: #689f38;
+}
+#footer-article a:hover {
+    text-decoration: underline;
+    color: #212121;
+}
+#footer-article a:visited {
+    color: #727272;
+}
+#form-table {
+    margin-right: 5%;
+    overflow: hidden;
+    border: 5px solid #b6b6b6;
+    display: table;
+}
+#form-cell, #form-cell-2 {
+    float: none;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+    font-size: 100%;
+}
+@media screen and (max-device-width: 480px) {
+    .total-center {
+        width: 90%;
+    }
+    .header-top {
+        height: 16.5%;
+    }
+    .center-box {
+        height: 20%;
+        justify-content: flex-end;
+    }
+    .center-box form {
+        margin-left: 0;
+
+    }
+    .center-box form input {
+        font-size: 35px;
+    }
+    #form-table {
+        margin-right: 5%;
+    }
+    #footer-article {
+        font-size: 36px;
+    }
 }

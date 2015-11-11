@@ -136,11 +136,11 @@ def add_link():
         if enc:
             if link != enc[0]:
                 add_new_link(link, len(enc[1]) + 1)
-            return render_template('index.html', href=enc)
+            return render_template('index.html', href=enc[1], url=enc[0])
 
         enc = add_new_link(link)
 
-        return render_template('index.html', href=enc)
+        return render_template('index.html', href=enc[1], url=enc[0])
     else:
         return render_template('index.html')
 

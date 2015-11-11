@@ -7,25 +7,38 @@
     {% else %}
     <title>tinyl.co</title>
     {% endif %}
-
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
 </head>
 <body>
-{% block body %}
-    {% if href %}
-        <section class="center-box">
-            <p>{{href}}</p>
-        </section>
-    {% elif form %}
-        <form action="/add" method="post" name="url">
-            <p>Url: </p>
-            {{form.link(size=255)}}
-            <p><input type="submit" value="Shorten"></p>
-        </form>
-    {% else %}
-        <h1>Hey</h1>
-        <p>I'm not actually certain how you're seeing this right now, but I just want
-            you to know that I'm proud of you regardless.</p>
-    {% endif %}
-{% endblock %}
+    <div class="total-center">
+        <header class="header-top"></header>
+        {% if href %}
+            <section class="center-box" style="justify-content: center;">
+                <p><a href="{{href}}">http://TinyL.co/{{href}}</a></p>
+            </section>
+        {% elif form %}
+            <section class="center-box">
+                <div id="form-table">
+                    <form action="/add" method="post" name="url">
+                        <div id="form-cell">
+                            {{form.link(size=15)}}
+                        </div>
+                        <div id="form-cell-2">
+                            <input type="image" src="{{ url_for('static', filename='forward.png') }}" align="right" value="Shorten">
+                        </div>
+                    </form>
+                </div>
+            </section>
+        {% else %}
+            <h1>Hey</h1>
+            <p>I'm not actually certain how you're seeing this right now, but I just want
+                you to know that I'm proud of you regardless.</p>
+        {% endif %}
+        <footer class="footer-bot">
+            <article id="footer-article">
+                Fork this project on Github! <a href="https://github.com/GrappigPanda/tinyl.co">Github</a>
+            </article>
+        </footer>
+    </div>
 </body>
 </html>
