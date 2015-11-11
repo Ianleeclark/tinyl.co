@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" method="post" name="url">
+    <p>Url: </p>
+    {{form.link(size=120)}}
+    <p><input type="submit" value="Shorten"></p>
+</form>
+{% endblock %}

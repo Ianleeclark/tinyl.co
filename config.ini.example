@@ -1,0 +1,4 @@
+secret_key = Test
+mongo_db = links
+mongo_host = localhost
+mongo_port = 27017

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+        <title>{{title}} - tinyl.co</title>
+    {% else %}
+        <title> Tinyl.co </title>
+    {% endif %}
+</head>
+<body>
+    {% if form %}
+        <form action="/add" method="post" name="link">
+            <p>Url: </p>
+            {{form.link(size=120)}}
+            <p><input type="submit" value="Shorten"></p>
+        </form>
+    {% endif %}
+
+    {% if href %}
+        <h1>{{href}}</h1>
+    {% endif %}
+</body>
+</html>

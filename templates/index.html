@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+        <title>{{title}}</title>
+    {% else %}
+        <title>tinyl.co</title>
+    {% endif %}
+</head>
+<body>
+    TEST
+    <form action="" method="post" name="url">
+        <p>Url: </p>
+        {{form.link(size=120)}}
+        <p><input type="submit" value="Shorten"></p>
+    </form>
+</body>
+</html>
