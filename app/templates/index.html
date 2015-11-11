@@ -1,24 +1,31 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     {% if title %}
-        <title>{{title}} - tinyl.co</title>
+    <title>{{title}}</title>
     {% else %}
-        <title> Tinyl.co </title>
-    {% endif %}
-</head>
-<body>
-    {% if form %}
-        <form action="/add" method="post" name="link">
-            <p>Url: </p>
-            {{form.link(size=120)}}
-            <p><input type="submit" value="Shorten"></p>
-        </form>
+    <title>tinyl.co</title>
     {% endif %}
 
+</head>
+<body>
+{% block body %}
     {% if href %}
-        <h1>{{href}}</h1>
+        <section class="center-box">
+            <p>{{href}}</p>
+        </section>
+    {% elif form %}
+        <form action="/add" method="post" name="url">
+            <p>Url: </p>
+            {{form.link(size=255)}}
+            <p><input type="submit" value="Shorten"></p>
+        </form>
+    {% else %}
+        <h1>Hey</h1>
+        <p>I'm not actually certain how you're seeing this right now, but I just want
+            you to know that I'm proud of you regardless.</p>
     {% endif %}
+{% endblock %}
 </body>
 </html>

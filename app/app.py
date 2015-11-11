@@ -133,12 +133,13 @@ def add_link():
 
         # Ensure no duplicate entries
         enc = db.query(link, 'url')
-        print enc[1]
         if enc:
             if link != enc[0]:
                 add_new_link(link, len(enc[1]) + 1)
             return render_template('index.html', href=enc)
+
         enc = add_new_link(link)
+
         return render_template('index.html', href=enc)
     else:
         return render_template('index.html')
