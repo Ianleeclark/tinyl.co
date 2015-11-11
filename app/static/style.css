@@ -51,6 +51,17 @@ body {
 .center-box p {
     font-family: 'Roboto Slab', sans-serif;
 }
+.center-box p a {
+    color: #689f38;
+    text-decoration: none;
+}
+.center-box p a:hover {
+    color: #212121;
+    text-decoration: underline;
+}
+.center-box p a:visited {
+    color: #727272;
+}
 .header-top {
     float: left;
     height: 33%;
