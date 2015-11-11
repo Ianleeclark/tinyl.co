@@ -10,14 +10,77 @@ Config = SafeConfigParser()
 Config.read("./config.ini")
 app.config['SECRET_KEY'] = "test"
 
-conn = sqlite3.connect('data.db')
+class DatabaseHandler:
+    """
+    """
+    def __init__(self, db):
+        self.db = db
+        self.opened = False
+        self.open_conn()
 
+    def open_conn(self):
+        try:
+            self.conn = sqlite3.connect(self.db)
+        except sqlite3.Error as e:
+            print "Failed to open db: {} with error {}".format(self.db, e)
 
-def lookup_encoded(link):
-    cursor = conn.cursor()
-    cursor.execute('select url from links where enc={}'.format(str(link)))
-    data = cursor.fetchone()
-    return str(data[0])
+        if self.conn:
+            self.opened = True
+            return True
+        else:
+            self.opened = False
+            return False
+
+    def close_conn(self):
+        self.conn.close()
+        self.opened = False
+        #TODO(ian): Error handling?
+
+    def refresh_conn(self):
+        if self.opened:
+            #TODO(ian): try for self-made errors here to ensure connections refresh
+            self.close_conn()
+            self.open_conn()
+        else:
+            self.open_conn()
+
+    def insert(self, values):
+        if len(values) != 3:
+            return None
+            print values
+
+        print [str(values[0]), values[1], values[2]]
+
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute('INSERT INTO links (url, enc, fullenc) VALUES (?,?,?);', [values[0], values[1], values[2]])
+            self.conn.commit()
+            print cursor.fetchone()
+        except sqlite3.Error as e:
+            print "Failed to retrieve url: {} -- Error: {}".format(link, e)
+            return None
+
+        cursor.close()
+
+    def query(self, value, to_find='url'):
+        try:
+            cursor = self.conn.cursor()
+            if to_find == "url":
+                cursor.execute('SELECT * FROM links WHERE url=?;', [value])#, [to_find, where, str(value)])
+            else:
+                cursor.execute('SELECT * FROM links WHERE enc=?;', [value])
+            data = cursor.fetchone()
+        except sqlite3.Error as e:
+            print "Failed to retrieve url: {} -- Error: {}".format(link, e)
+            return None
+
+        cursor.close()
+
+        if data:
+            return data
+        return None
+
+db = DatabaseHandler('/home/tinyl_server/tinyl.co/data.db')
 
 
 def encode_link(link):
@@ -32,29 +95,53 @@ def encode_link(link):
     return to_encode
 
 
+def validate_url(url):
+    for i in ['http://', 'https://', 'ftp://']:
+        if url.startswith(i):
+            return url
+    return ''.join(['http://', url])
+
+
+def add_new_link(link, max_len=6):
+    # md5 the link + datetime
+    fullenc = encode_link(link)
+    enc = fullenc[0:max_len]
+
+    # Insert the new url/enc/full into the db
+    try:
+        db.insert([link, enc, fullenc])
+    except sqlite3.Error as e:
+        print "Failed to execute Insert with {}: {}".format(link, e)
+
+    return enc
+
 @app.route('/<link>', methods=['GET', 'POST'])
 def redir(link):
     if request.method == 'GET':
-        target_url = lookup_encoded(link)
-        return redirect(target_url, code=302)
-    return '404 Niet Gevonden'
+        target_url = db.query(link, 'enc')[0] # Returns the triple of url/enc/fullenc
+        target_url = validate_url(target_url)
+        if target_url:
+            return redirect(target_url, code=302)
+        return render_template('404.html')
 
 
-@app.route('/add/', methods=['GET', 'POST'])
+@app.route('/add', methods=['GET', 'POST'])
 def add_link():
-    link = request.form['link']
     if request.method == 'POST':
-        fullenc = encode_link(link)
-        enc = fullenc[0:6]
-        cursor = conn.cursor()
-        try:
-            cursor.execute('INSERT INTO links(url, enc, full) VALUES (?, ?,?);', (link, enc, fullenc))
-        except sqlite3.Error as e:
-            print "Failed to execute Insert with {}: {}".format(link, e)
+        link = request.form['link']
+        print link
 
+        # Ensure no duplicate entries
+        enc = db.query(link, 'url')
+        print enc[1]
+        if enc:
+            if link != enc[0]:
+                add_new_link(link, len(enc[1]) + 1)
+            return render_template('index.html', href=enc)
+        enc = add_new_link(link)
         return render_template('index.html', href=enc)
     else:
-        return redirect('/')
+        return render_template('index.html')
 
 
 @app.route('/')
