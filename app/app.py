@@ -139,8 +139,9 @@ def add_link():
             return render_template('index.html', href=enc[1], url=enc[0])
 
         enc = add_new_link(link)
+        print enc
 
-        return render_template('index.html', href=enc[1], url=enc[0])
+        return render_template('index.html', href=enc, url=enc)
     else:
         return render_template('index.html')
 
