@@ -41,6 +41,7 @@ body {
     box-shadow: 1px 5px 5px #b6b6b6;
 }
 .center-box form {
+    border: none;
     width: 33%;
     font-size: 36px;
 }
@@ -80,8 +81,8 @@ body {
     border-radius: 10px;
 }
 #footer-article {
-    margin-left: 16.5%;
-    font-family: 'Robot Slab', sans-serif;
+    margin-left: 6.5%;
+    font-family: 'Roboto Slab', sans-serif;
 }
 #footer-article a {
     text-decoration: none;
@@ -99,6 +100,13 @@ body {
     overflow: hidden;
     border: 5px solid #b6b6b6;
     display: table;
+}
+.submit {
+    width: auto;
+    border: none;
+    color: #212121;
+    border-left: 5px solid #b6b6b6;
+    background-color: #689f38;
 }
 #form-cell, #form-cell-2 {
     float: none;
@@ -123,12 +131,45 @@ body {
 
     }
     .center-box form input {
+        font-size: 14px;
+    }
+    #form-table {
+        margin-right: 5%;
+    }
+    #footer-article {
+        text-align: center;
+        font-size: 14px;
+    }
+    @media screen and (orientation: landscape) {
+        .footer-bot {
+            height: 15%;
+        }
+    }
+}
+@media screen and (max-device-width: 720px) {
+    .total-center {
+        width: 90%;
+    }
+    .header-top {
+        height: 6.5%;
+    }
+    .center-box {
+        height: 20%;
+        justify-content: flex-end;
+    }
+    .center-box form {
+        margin-left: 0;
+
+    }
+    .center-box form input {
         font-size: 35px;
     }
     #form-table {
         margin-right: 5%;
     }
     #footer-article {
-        font-size: 36px;
+        text-align: center;
+        font-size: 25px;
     }
 }
+

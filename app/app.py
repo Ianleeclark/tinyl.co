@@ -55,7 +55,6 @@ class DatabaseHandler:
             cursor = self.conn.cursor()
             cursor.execute('INSERT INTO links (url, enc, fullenc) VALUES (?,?,?);', [values[0], values[1], values[2]])
             self.conn.commit()
-            print cursor.fetchone()
         except sqlite3.Error as e:
             print "Failed to retrieve url: {} -- Error: {}".format(link, e)
             return None
@@ -121,7 +120,7 @@ def redir(link):
         target_url = db.query(link, 'enc')[0] # Returns the triple of url/enc/fullenc
         target_url = validate_url(target_url)
         if target_url:
-            return redirect(target_url, code=302)
+            return render_template('redirect.html', target_url)
         return render_template('404.html')
 
 
@@ -129,7 +128,6 @@ def redir(link):
 def add_link():
     if request.method == 'POST':
         link = request.form['link']
-        print link
 
         # Ensure no duplicate entries
         enc = db.query(link, 'url')
