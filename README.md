@@ -1,4 +1,8 @@
-Flamongo is a restful api implemented in Python, Flask and MongoDB.
-Flamongo aims to be an excessively easy and quick api to allow me to 
-run my link-shortening service (<a href="http://tinyl.co/">TinyLink</a>)
-in an effective and rapid manner.
+Tinyl.co is a url-shortening service written using Sqlite, Flask, 
+Python 2.7 and HTML/CSS. I was mainly aiming to write this so that I could 
+better learn how Python and Flask fits into a website's ecosystem.
+
+If you'd like to contact me, feel free to:
+<a href="mailto:ian@ianleeclark.com">Email me!</a>
+or
+<a href="https://twitter.com/GrappigPanda">Tweet me!</a>
